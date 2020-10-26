@@ -15,13 +15,12 @@ pipeline {
                 sh 'tidy -q -e *.html'
             }
         }
-        stage('Upload-to-AWS'){
+        stage('Upload to AWS') {
             steps {
-                withAWS(region: 'us-east-1', withCredentials: 'static'){
-                    sh 'echo "Uploading file to AWS S3 Bucket"'
+                withAWS(region: 'us-east-1', credentials: 'static') {
+                    sh 'echo "Uploading to AWS"'
                     s3Upload(pathStyleAccessEnabled: true, payloadSigningEnabled: true, file:'index.html',  bucket:'jenkins-practice')
                 }
-                
             }
         }
     }
